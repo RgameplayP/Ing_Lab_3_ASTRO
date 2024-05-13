@@ -1,0 +1,20 @@
+---
+import  type {Seminario} from "../blog_astro/blog.ts";
+const response = await fetch("http://192.168.116.18:1337/api/articles?populate=*");
+const datajson = await response.json();
+const seminario: Seminario[]= datajson.data as Seminario[]; 
+const urlBase = import.meta.env.URL_IMG;
+console.log(seminario);
+---
+<div>
+    {
+        seminario.map(({attributes}: Seminario) => (
+            <div>
+                <p>{attributes.seminario}</p>
+                <p>{attributes.date}</p>
+                <p>{attributes.markdown}</p>  
+                <img src={urlBase + attributes.imagen_seminario.data.attributes.url} alt=""/>
+            </div>
+        ))
+    }
+</div>
